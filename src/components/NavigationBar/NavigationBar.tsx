@@ -1,12 +1,12 @@
 import Link from "next/link";
-import React from "react";
+import Badge from "./Badge/Badge";
 
 const links = ["Shop", "Men", "Women", "Kids"];
 
 function NavigationBar() {
     return (
         <section>
-            <nav className="text-xl font-light flex justify-around items-center h-[4.4rem] bg-slate-300 ">
+            <nav className="text-xl font-light flex justify-around items-center h-[4.4rem] shadow-sm">
                 <div>
                     {/* <Image /> */}
                     <Link href="/">Home</Link>
@@ -20,9 +20,20 @@ function NavigationBar() {
                     ))}
                 </div>
 
-                <div className="min-w-40 flex justify-between">
-                    <Link href="/account">Account</Link>
-                    <Link href="/cart">Cart</Link>
+                <div className="min-w-60 flex justify-between items-center h-full">
+                    <Link
+                        href="/accounts/register"
+                        className="border border-slate-600 rounded-full py-1 px-2 ">
+                        Register
+                    </Link>
+                    <Link
+                        href="/accounts/login"
+                        className="border border-slate-600 rounded-full py-1 px-2 ">
+                        Login
+                    </Link>
+                    <Link href="/cart">
+                        <Badge />
+                    </Link>
                 </div>
             </nav>
         </section>
