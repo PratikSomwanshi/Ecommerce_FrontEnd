@@ -1,11 +1,24 @@
 import { create } from "zustand";
+import { immer } from "zustand/middleware/immer";
 
 interface Store {
-    accessToken: null | string;
+    USER_EMAIL: string;
+    addUser: (payload: { email: string }) => void;
+    removeUser: () => void;
 }
 
-const useToken = create<Store>()((set) => ({
-    accessToken: null,
-}));
+const useUser = create<Store>()(
+    immer((set) => ({
+        USER_EMAIL: "",
+        addUser: (payload: { email: string }) =>
+            set((state) => {
+                state.USER_EMAIL = payload.email;
+            }),
+        removeUser: () =>
+            set((state) => {
+                state.USER_EMAIL = "";
+            }),
+    }))
+);
 
-export default useToken;
+export default useUser;

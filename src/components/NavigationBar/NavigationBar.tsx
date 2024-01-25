@@ -1,5 +1,6 @@
+"use client";
 import Link from "next/link";
-import Badge from "./Badge/Badge";
+import AccountButton from "./accountButton/AccountButton";
 
 const links = ["Shop", "Men", "Women", "Kids"];
 
@@ -21,19 +22,7 @@ function NavigationBar() {
                 </div>
 
                 <div className="min-w-60 flex justify-between items-center h-full">
-                    <Link
-                        href="/accounts/register"
-                        className="border border-slate-600 rounded-full py-1 px-2 ">
-                        Register
-                    </Link>
-                    <Link
-                        href="/accounts/login"
-                        className="border border-slate-600 rounded-full py-1 px-2 ">
-                        Login
-                    </Link>
-                    <Link href="/cart">
-                        <Badge />
-                    </Link>
+                    <AccountButton />
                 </div>
             </nav>
         </section>
