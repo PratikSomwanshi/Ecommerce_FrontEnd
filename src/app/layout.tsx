@@ -22,10 +22,8 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={prompt.className}>
-                <NextUI>
-                    <NavigationBar />
-                    {children}
-                </NextUI>
+                <NavigationBar />
+                <NextUI>{children}</NextUI>
             </body>
         </html>
     );

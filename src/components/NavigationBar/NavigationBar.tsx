@@ -19,6 +19,7 @@ function NavigationBar() {
                             <Link href={"/" + link.toLowerCase()}>{link}</Link>
                         </li>
                     ))}
+                    <Link href="/seller/product">Product</Link>
                 </div>
 
                 <div className="min-w-60 flex justify-between items-center h-full">
