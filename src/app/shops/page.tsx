@@ -1,20 +1,15 @@
 import ProductCard from "@/components/Shop/Card/ProductCard";
 import axios from "axios";
-import Error from "next/error";
 import React from "react";
 
 async function getProduct() {
-    try {
-        const response = await axios.get(
-            "http://localhost:5000/api/v1/products"
-        );
+    const response = await fetch("http://localhost:5000/api/v1/products", {
+        cache: "no-store",
+    });
 
-        return response.data.data;
-
-        console.log(response.data.data);
-    } catch (error) {
-        console.log(error);
-        return "something went wrong";
+    if (response.ok) {
+        const res = await response.json();
+        return res.data;
     }
 }
 

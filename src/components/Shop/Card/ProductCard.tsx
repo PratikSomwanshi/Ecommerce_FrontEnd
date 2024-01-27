@@ -15,7 +15,7 @@ interface Props {
 
 function ProductCard({ data }: Props) {
     return (
-        <Link href={`/shop/${data._id}`}>
+        <Link href={`/shops/${data._id}`}>
             <section
                 className="w-80 h-72 rounded-lg
             transition-all 
@@ -32,7 +32,7 @@ function ProductCard({ data }: Props) {
                 </div>
                 <div className="px-3 py-1 text-xl text-slate-600 space-y-1 flex flex-col justify-center h-28">
                     <h1 className="font-normal">{data.name}</h1>
-                    <h2 className="">&#x20B9;{data.price}</h2>
+                    <h2 className="">&#x20B9;{JSON.stringify(data.price)}</h2>
                 </div>
             </section>
         </Link>

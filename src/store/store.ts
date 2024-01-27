@@ -2,23 +2,23 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
 interface Store {
-    USER_EMAIL: string;
-    addUser: (payload: { email: string }) => void;
-    removeUser: () => void;
+    CART_COUNT: number;
+    addCount: () => void;
+    removeCount: () => void;
 }
 
-const useUser = create<Store>()(
+const useCart = create<Store>()(
     immer((set) => ({
-        USER_EMAIL: "",
-        addUser: (payload: { email: string }) =>
+        CART_COUNT: 0,
+        addCount: () =>
             set((state) => {
-                state.USER_EMAIL = payload.email;
+                state.CART_COUNT++;
             }),
-        removeUser: () =>
+        removeCount: () =>
             set((state) => {
-                state.USER_EMAIL = "";
+                state.CART_COUNT--;
             }),
     }))
 );
 
-export default useUser;
+export default useCart;

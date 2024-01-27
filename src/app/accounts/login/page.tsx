@@ -6,6 +6,7 @@ import axios from "axios";
 import useUser from "@/store/store";
 import { useCookies } from "react-cookie";
 import moment from "moment";
+import { useRouter } from "next/navigation";
 
 interface Inputs {
     email: string;
@@ -16,6 +17,7 @@ function Register() {
     const { USER_EMAIL, addUser, removeUser } = useUser();
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const time = moment(new Date()).add(1, "d").toDate();
+    const router = useRouter();
 
     async function signInUser(data: Inputs) {
         try {
@@ -32,6 +34,7 @@ function Register() {
                 expires: time,
             });
             addUser({ email: response.data.msg.email });
+            router.push("/");
         } catch (error) {
             console.log(error);
         }

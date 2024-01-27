@@ -2,12 +2,14 @@
 import { useState } from "react";
 import { Badge as Bad } from "@nextui-org/react";
 import { TbShoppingCart } from "react-icons/tb";
+import useCart from "@/store/store";
 
 function Badge() {
+    const { CART_COUNT } = useCart();
     const [isInvisible, setIsInvisible] = useState(false);
     return (
         <Bad
-            content={5}
+            content={CART_COUNT}
             variant="shadow"
             color="danger"
             isInvisible={isInvisible}

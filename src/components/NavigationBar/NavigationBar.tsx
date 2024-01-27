@@ -16,7 +16,15 @@ function NavigationBar() {
                 <div className="flex justify-between min-w-[30rem]  ">
                     {links.map((link) => (
                         <li key={link}>
-                            <Link href={"/" + link.toLowerCase()}>{link}</Link>
+                            {link == "Kids" ? (
+                                <Link href={"/" + link.toLowerCase()}>
+                                    {link}
+                                </Link>
+                            ) : (
+                                <Link href={"/" + link.toLowerCase() + "s"}>
+                                    {link}
+                                </Link>
+                            )}
                         </li>
                     ))}
                     <Link href="/seller/product">Product</Link>
