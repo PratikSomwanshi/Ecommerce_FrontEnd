@@ -8,7 +8,7 @@ import {
     Spinner,
     Textarea,
 } from "@nextui-org/react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
@@ -30,22 +30,26 @@ const categories = [
 
 function page() {
     const [loading, setLoading] = useState(false);
+    const [valid, setValid] = useState(false);
     const { USER_EMAIL } = useUser();
     const [cookies, setCookies] = useCookies(["accessToken"]);
 
-    async function validate(token: string) {
-        try {
-            const response = await axios.post(
-                "localhost:8000/api/v1/users/auth",
-                {
-                    token,
-                }
-            );
-        } catch (error) {}
-    }
-
     useEffect(() => {
-        console.log(cookies);
+        async function validate(token: string) {
+            try {
+                await axios({
+                    method: "post",
+                    url: "http://localhost:8000/api/v1/users/auth",
+                    data: {
+                        token,
+                    },
+                });
+
+                setValid(true);
+            } catch (error) {}
+        }
+
+        validate(cookies.accessToken);
     }, []);
 
     async function addProduct(data: Inputs) {
@@ -87,7 +91,7 @@ function page() {
     const onSubmit: SubmitHandler<Inputs> = async (data) =>
         await addProduct(data);
 
-    if (cookies.accessToken) {
+    if (valid) {
         return (
             <section className="w-full h-[44rem] flex justify-center items-center">
                 <form

@@ -3,8 +3,6 @@ import Btn from "@/components/Register/Button";
 import { Input } from "@nextui-org/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
-import { useState } from "react";
-import Link from "next/link";
 import useUser from "@/store/store";
 import { useCookies } from "react-cookie";
 import moment from "moment";
@@ -17,7 +15,7 @@ interface Inputs {
 function Register() {
     const { USER_EMAIL, addUser, removeUser } = useUser();
     const [cookies, setCookie] = useCookies(["accessToken"]);
-    const time = moment(new Date()).add(1, "m").toDate();
+    const time = moment(new Date()).add(1, "d").toDate();
 
     async function signInUser(data: Inputs) {
         try {
