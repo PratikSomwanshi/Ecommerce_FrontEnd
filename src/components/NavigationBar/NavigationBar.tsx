@@ -1,4 +1,3 @@
-"use client";
 import Link from "next/link";
 import AccountButton from "./accountButton/AccountButton";
 

@@ -14,7 +14,7 @@ interface Inputs {
 }
 
 function Register() {
-    const { USER_EMAIL, addUser, removeUser } = useUser();
+    // const { USER_EMAIL, addCount } = useUser();
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const time = moment(new Date()).add(1, "d").toDate();
     const router = useRouter();
@@ -33,7 +33,7 @@ function Register() {
             setCookie("accessToken", response.data.msg.token, {
                 expires: time,
             });
-            addUser({ email: response.data.msg.email });
+            // addUser({ email: response.data.msg.email });
             router.push("/");
         } catch (error) {
             console.log(error);

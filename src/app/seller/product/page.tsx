@@ -31,7 +31,7 @@ const categories = [
 function page() {
     const [loading, setLoading] = useState(false);
     const [valid, setValid] = useState(false);
-    const { USER_EMAIL } = useUser();
+    // const { USER_EMAIL } = useUser();
     const [cookies, setCookies] = useCookies(["accessToken"]);
 
     useEffect(() => {

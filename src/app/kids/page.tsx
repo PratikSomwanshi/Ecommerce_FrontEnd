@@ -12,29 +12,42 @@ interface Product {
 }
 
 async function getMensProducts() {
-    const response = await fetch(
+    let response;
+    response = await fetch(
         "http://localhost:5000/api/v1/products/?category=kids",
-        { cache: "no-store" }
+        {
+            cache: "no-store",
+        }
     );
 
     if (response.ok) {
         const res = await response.json();
+        console.log(res.data);
         return res.data;
     }
+
+    return {
+        error: "Failed to fetch the data",
+    };
 }
 
 async function page() {
     const response = await getMensProducts();
+
+    if (response.error) {
+        return (
+            <div className="h-[44rem] w-full flex justify-center items-center">
+                <h3 className="text-2xl">{response.error}</h3>
+            </div>
+        );
+    }
+
     return (
         <section className="container m-auto flex justify-center">
             <div className=" p-4 flex gap-8 w-[70%] flex-wrap">
-                {response ? (
-                    response.map((item: Product) => {
-                        return <ProductCard key={item._id} data={item} />;
-                    })
-                ) : (
-                    <p>Loading...</p>
-                )}
+                {response.map((item: Product) => {
+                    return <ProductCard key={item._id} data={item} />;
+                })}
             </div>
         </section>
     );
