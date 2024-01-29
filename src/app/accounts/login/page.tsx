@@ -2,11 +2,12 @@
 import Btn from "@/components/Register/Button";
 import { Input } from "@nextui-org/react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
-import useUser from "@/store/store";
+import axios, { AxiosError } from "axios";
 import { useCookies } from "react-cookie";
 import moment from "moment";
 import { useRouter } from "next/navigation";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 interface Inputs {
     email: string;
@@ -14,31 +15,29 @@ interface Inputs {
 }
 
 function Register() {
-    // const { USER_EMAIL, addCount } = useUser();
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const time = moment(new Date()).add(1, "d").toDate();
     const router = useRouter();
 
-    async function signInUser(data: Inputs) {
-        try {
-            const response = await axios({
+    const mutation = useMutation({
+        mutationFn: (user: Inputs) => {
+            return fetch("http://localhost:8000/api/v1/users/signin", {
                 method: "post",
-                url: "http://localhost:8000/api/v1/users/signin",
-                data: {
-                    email: data.email,
-                    password: data.password,
+                cache: "no-store",
+                headers: {
+                    "Content-Type": "application/json",
                 },
-            });
+                body: JSON.stringify(user),
+            }).then((res) => res.json());
+        },
+    });
 
-            setCookie("accessToken", response.data.msg.token, {
+    useEffect(() => {
+        if (mutation.data && mutation.data.data.token)
+            setCookie("accessToken", mutation.data.data.token, {
                 expires: time,
             });
-            // addUser({ email: response.data.msg.email });
-            router.push("/");
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    }, [mutation.data]);
 
     const {
         register,
@@ -47,7 +46,23 @@ function Register() {
     } = useForm<Inputs>();
 
     const onSubmit: SubmitHandler<Inputs> = async (data) =>
-        await signInUser(data);
+        mutation.mutate(data);
+
+    if (cookies["accessToken"]) router.push("/");
+
+    if (mutation.isError && mutation.error.name == "TypeError") {
+        return (
+            <div className="center__screen__text">
+                <h2>
+                    Failed to Connect to Server, Please Try Again after some
+                    time
+                </h2>
+            </div>
+        );
+    }
+
+    if (mutation.isSuccess) {
+    }
 
     return (
         <section className="h-[44rem] w-full flex justify-center items-center ">
@@ -66,6 +81,9 @@ function Register() {
                     {...register("password", { required: true })}
                 />
                 {errors.password && <span>Password is Required</span>}
+                {mutation.data && (
+                    <span>{mutation.data.error.explanation}</span>
+                )}
                 <Btn />
             </form>
         </section>

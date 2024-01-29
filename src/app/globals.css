@@ -5,3 +5,9 @@
 li {
     list-style: none;
 }
+
+@layer base {
+    .center__screen__text {
+        @apply h-[44rem] w-full flex justify-center items-center text-2xl;
+    }
+}
