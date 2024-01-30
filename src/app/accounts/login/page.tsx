@@ -33,10 +33,13 @@ function Register() {
     });
 
     useEffect(() => {
-        if (mutation.data && mutation.data.data.token)
+        if (mutation.data && mutation.data.data.token) {
             setCookie("accessToken", mutation.data.data.token, {
                 expires: time,
             });
+
+            router.push("/");
+        }
     }, [mutation.data]);
 
     const {
@@ -48,7 +51,7 @@ function Register() {
     const onSubmit: SubmitHandler<Inputs> = async (data) =>
         mutation.mutate(data);
 
-    if (cookies["accessToken"]) router.push("/");
+    // if (cookies["accessToken"])
 
     if (mutation.isError && mutation.error.name == "TypeError") {
         return (

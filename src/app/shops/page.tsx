@@ -9,7 +9,7 @@ async function getProduct() {
 
     if (response.ok) {
         const res = await response.json();
-        console.log(res.data);
+
         return res.data;
     }
 

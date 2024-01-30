@@ -9,9 +9,17 @@ import LinksLogout from "./LinksLogout";
 function AccountButton() {
     const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
     if (!cookies.accessToken) {
-        return <LinksRegister />;
+        return (
+            <div className="w-full flex justify-between items-center h-full">
+                <LinksRegister />
+            </div>
+        );
     } else {
-        return <LinksLogout />;
+        return (
+            <div className="w-full flex justify-between items-center h-full">
+                <LinksLogout />
+            </div>
+        );
     }
 }
 

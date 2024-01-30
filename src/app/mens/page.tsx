@@ -22,7 +22,7 @@ async function getMensProducts() {
 
     if (response.ok) {
         const res = await response.json();
-        console.log(res.data);
+
         return res.data;
     }
 

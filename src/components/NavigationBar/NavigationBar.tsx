@@ -1,5 +1,9 @@
 import Link from "next/link";
-import AccountButton from "./accountButton/AccountButton";
+import dynamic from "next/dynamic";
+
+const NoSSR = dynamic(() => import("./accountButton/AccountButton"), {
+    ssr: false,
+});
 
 const links = ["Shop", "Men", "Women", "Kids"];
 
@@ -30,7 +34,7 @@ function NavigationBar() {
                 </div>
 
                 <div className="min-w-60 flex justify-between items-center h-full">
-                    <AccountButton />
+                    <NoSSR />
                 </div>
             </nav>
         </section>

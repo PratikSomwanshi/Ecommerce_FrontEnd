@@ -24,14 +24,10 @@ function Register() {
                 },
             });
 
-            console.log(response);
-
             if (response.data.data) {
                 setIData(true);
             }
-        } catch (error) {
-            console.log(error);
-        }
+        } catch (error) {}
     }
 
     const {

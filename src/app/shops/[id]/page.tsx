@@ -11,9 +11,7 @@ async function getProduct(id: string) {
         );
 
         return response.data.data;
-    } catch (error) {
-        console.log(error);
-    }
+    } catch (error) {}
 }
 
 async function page({ params }: { params: { id: string } }) {
