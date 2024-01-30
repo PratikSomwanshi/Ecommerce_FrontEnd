@@ -14,6 +14,7 @@ interface Props {
 }
 
 function ProductCard({ data }: Props) {
+    console.log(data);
     return (
         <Link href={`/shops/${data._id}`}>
             <section

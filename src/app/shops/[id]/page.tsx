@@ -1,7 +1,7 @@
+"use client";
+import useCart from "@/store/store";
 import CartBtn from "@/components/Product/CartBtn/CartBtn";
-import { Button } from "@nextui-org/react";
 import axios from "axios";
-import Image from "next/image";
 import React from "react";
 
 async function getProduct(id: string) {
@@ -16,6 +16,7 @@ async function getProduct(id: string) {
 
 async function page({ params }: { params: { id: string } }) {
     const data = await getProduct(params.id);
+
     return (
         <section className="px-8 py-4 flex ">
             <div
@@ -46,7 +47,7 @@ async function page({ params }: { params: { id: string } }) {
                     <p className="text-2xl font-normal">{data.description}</p>
                 </div>
                 <div className="mt-10">
-                    <CartBtn />
+                    <CartBtn id={params.id} />
                 </div>
             </div>
         </section>
