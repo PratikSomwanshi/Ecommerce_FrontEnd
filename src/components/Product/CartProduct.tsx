@@ -5,6 +5,7 @@ import React from "react";
 import { useMutation } from "@tanstack/react-query";
 import useCart from "@/store/store";
 import { useRouter } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 interface Props {
     data: {
@@ -33,6 +34,7 @@ function CartProduct(props: Props) {
         mutationFn: async (newTodo: CartApi) => {
             return await fetch("http://localhost:8000/api/v1/users/cart", {
                 method: "DELETE",
+                cache: "no-store",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -69,7 +71,6 @@ function CartProduct(props: Props) {
                             email: USER_EMAIL,
                             index: props.count,
                         });
-                        router.push("/cart");
                     }}>
                     Delete
                 </Button>
