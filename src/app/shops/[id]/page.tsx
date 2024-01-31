@@ -1,17 +1,19 @@
 "use client";
-import useCart from "@/store/store";
 import CartBtn from "@/components/Product/CartBtn/CartBtn";
-import axios from "axios";
 import React from "react";
 
 async function getProduct(id: string) {
-    try {
-        const response = await axios.get(
-            `http://localhost:5000/api/v1/products/${id}`
-        );
+    const response = await fetch(
+        `http://localhost:5000/api/v1/products/${id}`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }
+    ).then((res) => res.json());
 
-        return response.data.data;
-    } catch (error) {}
+    return response.data;
 }
 
 async function page({ params }: { params: { id: string } }) {

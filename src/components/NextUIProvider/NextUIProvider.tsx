@@ -6,6 +6,7 @@ import {
     QueryClientProvider,
     useQuery,
 } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 
@@ -15,6 +16,7 @@ function NextUI({ children }: { children: React.ReactNode }) {
         <NextUIProvider>
             <QueryClientProvider client={queryClient}>
                 {children}
+                <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
         </NextUIProvider>
     );

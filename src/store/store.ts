@@ -15,7 +15,7 @@ interface Store {
 
 const useCart = create<Store>()(
     immer((set) => ({
-        USER_EMAIL: "ram@ram.com",
+        USER_EMAIL: "",
         CART_COUNT: 0,
         CART: 0,
         addCount: () =>

@@ -10,11 +10,12 @@ interface Cart {
 
 function page() {
     let count = -1;
-    const { USER_EMAIL, setCartCount, CART } = useCart();
+    const { USER_EMAIL, setCartCount, setCount } = useCart();
 
     const cartData = {
         email: USER_EMAIL,
     };
+
     const mutation = useMutation({
         mutationFn: async (newTodo: Cart) => {
             return await fetch("http://localhost:8000/api/v1/users/cart", {
@@ -29,7 +30,7 @@ function page() {
     });
 
     useEffect(() => {
-        mutation.mutate(cartData);
+        if (USER_EMAIL) mutation.mutate(cartData);
     }, []);
 
     if (mutation.isSuccess) {
@@ -44,6 +45,8 @@ function page() {
             </section>
         );
     }
+
+    return <h1 className="center__screen__text">Please login to view cart</h1>;
 }
 
 export default page;

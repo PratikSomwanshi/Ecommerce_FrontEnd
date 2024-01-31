@@ -2,12 +2,12 @@
 import Btn from "@/components/Register/Button";
 import { Input } from "@nextui-org/react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios, { AxiosError } from "axios";
 import { useCookies } from "react-cookie";
 import moment from "moment";
 import { useRouter } from "next/navigation";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect } from "react";
+import useCart from "@/store/store";
 
 interface Inputs {
     email: string;
@@ -15,13 +15,14 @@ interface Inputs {
 }
 
 function Register() {
+    const { addUserEmail } = useCart();
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const time = moment(new Date()).add(1, "d").toDate();
     const router = useRouter();
 
     const mutation = useMutation({
-        mutationFn: (user: Inputs) => {
-            return fetch("http://localhost:8000/api/v1/users/signin", {
+        mutationFn: async (user: Inputs) => {
+            return await fetch("http://localhost:8000/api/v1/users/signin", {
                 method: "post",
                 cache: "no-store",
                 headers: {
@@ -65,6 +66,7 @@ function Register() {
     }
 
     if (mutation.isSuccess) {
+        addUserEmail({ email: mutation.data.data.email });
     }
 
     return (

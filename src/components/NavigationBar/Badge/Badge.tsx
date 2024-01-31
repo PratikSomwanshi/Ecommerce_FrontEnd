@@ -5,11 +5,16 @@ import { TbShoppingCart } from "react-icons/tb";
 import useCart from "@/store/store";
 
 function Badge() {
-    const { CART_COUNT } = useCart();
+    const { CART } = useCart();
     const [isInvisible, setIsInvisible] = useState(false);
+
+    if (CART == 0) {
+        return <TbShoppingCart size="26px" />;
+    }
+
     return (
         <Bad
-            content={CART_COUNT}
+            content={CART}
             variant="shadow"
             color="danger"
             isInvisible={isInvisible}

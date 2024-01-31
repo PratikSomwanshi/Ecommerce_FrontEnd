@@ -12,25 +12,28 @@ function CartBtn(props: { id: string }) {
     const router = useRouter();
 
     async function addToCart() {
-        setLoading(true);
-        const response = await fetch(
-            "http://localhost:8000/api/v1/users/cart",
-            {
-                method: "PUT",
-                cache: "no-store",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: USER_EMAIL,
-                    productId: props.id,
-                }),
-            }
-        ).then((res) => res.json());
+        if (!USER_EMAIL) {
+            router.push("/cart");
+        } else {
+            setLoading(true);
+            const response = await fetch(
+                "http://localhost:8000/api/v1/users/cart",
+                {
+                    method: "PUT",
+                    cache: "no-store",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: USER_EMAIL,
+                        productId: props.id,
+                    }),
+                }
+            ).then((res) => res.json());
 
-        handleCart(response);
-
-        setLoading(false);
+            handleCart(response);
+            setLoading(false);
+        }
     }
 
     function handleCart(response: { success: boolean; message: string }) {

@@ -71,6 +71,7 @@ function CartProduct(props: Props) {
                             email: USER_EMAIL,
                             index: props.count,
                         });
+                        router.push("/shops");
                     }}>
                     Delete
                 </Button>
