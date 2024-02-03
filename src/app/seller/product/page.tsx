@@ -136,7 +136,7 @@ function page() {
                             <Spinner />
                         </div>
                     ) : (
-                        <Btn />
+                        <Btn content="add" />
                     )}
                 </form>
             </section>

@@ -1,10 +1,8 @@
 import Btn from "@/components/Register/Button";
-import { Input } from "@nextui-org/react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 
 interface Inputs {
     email: string;
@@ -13,6 +11,8 @@ interface Inputs {
 
 function Register() {
     const [iData, setIData] = useState(false);
+    let compareData = false;
+    let valid = false;
 
     async function createUser(data: Inputs) {
         try {
@@ -37,8 +37,9 @@ function Register() {
         formState: { errors },
     } = useForm<Inputs>();
 
-    const onSubmit: SubmitHandler<Inputs> = async (data) =>
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
         await createUser(data);
+    };
 
     if (!iData) {
         return (
@@ -90,7 +91,8 @@ function Register() {
                                 </div>
                             )}
                         </div>
-                        <Btn />
+
+                        <Btn content="Register" />
                     </form>
                 </div>
                 <div className="w-1/2 flex items-end ">

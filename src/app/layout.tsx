@@ -3,6 +3,7 @@ import { Prompt } from "next/font/google";
 import "./globals.css";
 import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import NextUI from "@/components/NextUIProvider/NextUIProvider";
+import Footer from "@/components/Footer/Footer";
 
 const prompt = Prompt({
     subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
             <body className={prompt.className}>
                 <NavigationBar />
                 <NextUI>{children}</NextUI>
+                <Footer />
             </body>
         </html>
     );

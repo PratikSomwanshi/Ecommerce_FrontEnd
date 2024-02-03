@@ -1,20 +1,51 @@
-import Image from "next/image";
-import React from "react";
+"use client";
+import { Navigation, Pagination, Autoplay, A11y } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import ProductSlide from "./Slider/ProductSlide";
 
 function HeroSection() {
     return (
-        <section className="h-[44rem] bg-slate-200 grid grid-cols-2  items-center w-full">
-            <div className="grid justify-items-center items-center h-full">
-                <Image
-                    src="/shoppy.png"
-                    width={1000}
-                    height={2000}
-                    alt="hero.jpg"
-                />
-            </div>
-            <div className="grid justify-items-center items-center h-full text-6xl">
-                <h1>Shop What you want</h1>
-            </div>
+        <section className="bg-slate-50 h-[30rem] px-6">
+            <Swiper
+                modules={[Navigation, Autoplay, Pagination, A11y]}
+                spaceBetween={50}
+                slidesPerView={1}
+                autoplay={{
+                    delay: 10000,
+                    disableOnInteraction: false,
+                }}
+                navigation
+                pagination={{ clickable: true }}
+                className="h-[inherit] flex items-center">
+                <SwiperSlide>
+                    <ProductSlide>
+                        <h1>Product 1</h1>
+                    </ProductSlide>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <ProductSlide>
+                        <h1>Product 2</h1>
+                    </ProductSlide>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <ProductSlide>
+                        <h1>Product 3</h1>
+                    </ProductSlide>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <ProductSlide>
+                        <h1>Product 4</h1>
+                    </ProductSlide>
+                </SwiperSlide>
+                <SwiperSlide>
+                    <ProductSlide>
+                        <h1>Product 5</h1>
+                    </ProductSlide>
+                </SwiperSlide>
+            </Swiper>
         </section>
     );
 }
