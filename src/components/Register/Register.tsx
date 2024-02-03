@@ -7,6 +7,7 @@ import Link from "next/link";
 interface Inputs {
     email: string;
     password: string;
+    conform_password: string;
 }
 
 function Register() {
@@ -33,6 +34,7 @@ function Register() {
 
     const {
         register,
+        watch,
         handleSubmit,
         formState: { errors },
     } = useForm<Inputs>();
@@ -87,6 +89,32 @@ function Register() {
                                 <div className="flex justify-end px-4">
                                     <span className="text-red-500">
                                         Password is Required
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                        <div className="w-10/12 h-[104px]">
+                            <label
+                                htmlFor="conform_password"
+                                className="flex flex-col mb-1">
+                                Conform Password :
+                                <input
+                                    className="w-full border-black border-b outline-none bg-slate-50  px-4 py-2 rounded-md"
+                                    type="password"
+                                    {...register("conform_password", {
+                                        required: true,
+                                        validate: (value: string) => {
+                                            if (watch("password") != value) {
+                                                return "Password does not match";
+                                            }
+                                        },
+                                    })}
+                                />
+                            </label>
+                            {errors.conform_password && (
+                                <div className="flex justify-end px-4">
+                                    <span className="text-red-500">
+                                        Password do not match
                                     </span>
                                 </div>
                             )}
