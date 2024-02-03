@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Inputs {
     email: string;
@@ -33,7 +34,6 @@ function Register() {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm<Inputs>();
 
@@ -42,23 +42,65 @@ function Register() {
 
     if (!iData) {
         return (
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="h-[30rem] w-[24rem] px-6 py-16 rounded-md bg-slate-300 space-y-4">
-                <Input
-                    label="Email"
-                    type="email"
-                    {...register("email", { required: true })}
-                />
-                {errors.email && <span>Email is Required</span>}
-                <Input
-                    label="Password"
-                    type="password"
-                    {...register("password", { required: true })}
-                />
-                {errors.password && <span>Password is Required</span>}
-                <Btn />
-            </form>
+            <section className="flex h-[44.4rem] w-full">
+                <div className="w-1/2 flex justify-end items-center ">
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className=" px-6 py-16 w-3/4  flex flex-col justify-center items-center text-xl 
+                        h-3/4 rounded-md bg-slate-50 shadow-md ">
+                        <div className="w-10/12 h-[104px]">
+                            <label
+                                htmlFor="email"
+                                className="flex flex-col mb-1">
+                                Email :
+                                <input
+                                    className="w-full outline-none px-4 py-2 rounded-md bg-slate-50
+                                    border-black border-b
+                                    "
+                                    type="email"
+                                    {...register("email", { required: true })}
+                                />
+                            </label>
+                            {errors.email && (
+                                <div className="flex justify-end px-4">
+                                    <span className="text-end w-full text-red-500">
+                                        Email is Required
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                        <div className="w-10/12 h-[104px]">
+                            <label
+                                htmlFor="password"
+                                className="flex flex-col mb-1">
+                                Password :
+                                <input
+                                    className="w-full border-black border-b outline-none bg-slate-50  px-4 py-2 rounded-md"
+                                    type="password"
+                                    {...register("password", {
+                                        required: true,
+                                    })}
+                                />
+                            </label>
+                            {errors.password && (
+                                <div className="flex justify-end px-4">
+                                    <span className="text-red-500">
+                                        Password is Required
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                        <Btn />
+                    </form>
+                </div>
+                <div className="w-1/2 flex items-end ">
+                    <img
+                        src="/register.png"
+                        alt="register"
+                        className="h-3/4 -translate-x-16"
+                    />
+                </div>
+            </section>
         );
     } else {
         return (

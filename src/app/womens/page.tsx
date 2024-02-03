@@ -11,30 +11,42 @@ interface Product {
     category: string;
 }
 
-async function getMensProducts() {
-    const response = await fetch(
-        "http://localhost:5000/api/v1/products/?category=women",
-        { cache: "no-store" }
-    );
+async function getWomensProducts() {
+    try {
+        const response = await fetch(
+            "http://localhost:5000/api/v1/products/?category=women",
+            { cache: "no-store" }
+        );
 
-    if (response.ok) {
-        const res = await response.json();
-        return res.data;
+        if (response.ok) {
+            const res = await response.json();
+            return res.data;
+        }
+    } catch (error) {
+        return {
+            error: "Failed to fetch the data",
+        };
     }
 }
 
 async function page() {
-    const response = await getMensProducts();
+    const response = await getWomensProducts();
+
+    if (response.error) {
+        return (
+            <div className="h-[44rem] w-full flex justify-center items-center">
+                <h3 className="text-2xl">{response.error}</h3>
+            </div>
+        );
+    }
+
     return (
         <section className="container m-auto flex justify-center">
             <div className=" p-4 flex gap-8 w-[70%] flex-wrap">
-                {response ? (
+                {response &&
                     response.map((item: Product) => {
                         return <ProductCard key={item._id} data={item} />;
-                    })
-                ) : (
-                    <p>Loading...</p>
-                )}
+                    })}
             </div>
         </section>
     );

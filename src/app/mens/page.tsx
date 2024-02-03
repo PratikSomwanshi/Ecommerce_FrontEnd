@@ -12,6 +12,9 @@ interface Product {
 }
 
 async function getMensProducts() {
+    try {
+        
+    
     let response;
     response = await fetch(
         "http://localhost:5000/api/v1/products/?category=men",
@@ -26,9 +29,13 @@ async function getMensProducts() {
         return res.data;
     }
 
+} catch (error) {
     return {
         error: "Failed to fetch the data",
-    };
+    };  
+}
+
+    
 }
 
 async function page() {

@@ -3,17 +3,23 @@ import CartBtn from "@/components/Product/CartBtn/CartBtn";
 import React from "react";
 
 async function getProduct(id: string) {
-    const response = await fetch(
-        `http://localhost:5000/api/v1/products/${id}`,
-        {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }
-    ).then((res) => res.json());
+    try {
+        const response = await fetch(
+            `http://localhost:5000/api/v1/products/${id}`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        ).then((res) => res.json());
 
-    return response.data;
+        return response.data;
+    } catch (error) {
+        return {
+            error: "Failed to fetch the data",
+        };
+    }
 }
 
 async function page({ params }: { params: { id: string } }) {

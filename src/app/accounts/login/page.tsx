@@ -71,6 +71,13 @@ function Register() {
 
     return (
         <section className="h-[44rem] w-full flex justify-center items-center ">
+            <div className="w-1/2 flex items-end ">
+                <img
+                    src="/register.png"
+                    alt="register"
+                    className="h-3/4 -translate-x-16"
+                />
+            </div>
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="h-[30rem] w-[24rem] px-6 py-16 rounded-md bg-slate-300 space-y-4">

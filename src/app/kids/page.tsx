@@ -12,23 +12,25 @@ interface Product {
 }
 
 async function getMensProducts() {
-    let response;
-    response = await fetch(
-        "http://localhost:5000/api/v1/products/?category=kids",
-        {
-            cache: "no-store",
+    try {
+        let response;
+        response = await fetch(
+            "http://localhost:5000/api/v1/products/?category=kids",
+            {
+                cache: "no-store",
+            }
+        );
+
+        if (response.ok) {
+            const res = await response.json();
+
+            return res.data;
         }
-    );
-
-    if (response.ok) {
-        const res = await response.json();
-
-        return res.data;
+    } catch (error) {
+        return {
+            error: "Failed to fetch the data",
+        };
     }
-
-    return {
-        error: "Failed to fetch the data",
-    };
 }
 
 async function page() {
