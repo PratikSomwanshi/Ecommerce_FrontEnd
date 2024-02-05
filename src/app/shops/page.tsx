@@ -1,3 +1,4 @@
+import ProductSkeleton from "@/components/ProductSkeleton/ProductSkeleton";
 import ProductCard from "@/components/Shop/Card/ProductCard";
 import React, { Suspense } from "react";
 
@@ -32,8 +33,6 @@ interface Product {
 async function page() {
     const res = await getProduct();
 
-    if (!res) return <h1>Loading</h1>;
-
     if (res.error) {
         return (
             <div className="h-[44rem] w-full flex justify-center items-center">
@@ -47,7 +46,7 @@ async function page() {
             <div className=" p-4 flex gap-8 w-[70%] flex-wrap">
                 {res.map((item: Product) => {
                     return (
-                        <Suspense fallback={<h1>Loading</h1>}>
+                        <Suspense fallback={<ProductSkeleton />}>
                             <ProductCard key={item._id} data={item} />
                         </Suspense>
                     );

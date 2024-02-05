@@ -2,10 +2,8 @@ import { Button } from "@nextui-org/react";
 import { MdDelete } from "react-icons/md";
 import Image from "next/image";
 import React from "react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useCart from "@/store/store";
-import { useRouter } from "next/navigation";
-import { revalidatePath } from "next/cache";
 
 interface Props {
     data: {
@@ -28,18 +26,26 @@ function CartProduct(props: Props) {
     const { USER_EMAIL } = useCart();
     const data = props.data;
 
-    const router = useRouter();
+    const queryClient = useQueryClient();
 
     const mutation = useMutation({
         mutationFn: async (newTodo: CartApi) => {
-            return await fetch("http://localhost:8000/api/v1/users/cart", {
-                method: "DELETE",
-                cache: "no-store",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(newTodo),
-            }).then((res) => res.json());
+            const response = await fetch(
+                "http://localhost:8000/api/v1/users/cart",
+                {
+                    method: "DELETE",
+                    cache: "no-store",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(newTodo),
+                }
+            ).then((res) => res.json());
+            console.log(response);
+            return response;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["carts"] });
         },
     });
 
@@ -71,7 +77,6 @@ function CartProduct(props: Props) {
                             email: USER_EMAIL,
                             index: props.count,
                         });
-                        router.push("/shops");
                     }}>
                     Delete
                 </Button>

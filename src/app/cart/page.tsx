@@ -1,8 +1,8 @@
 "use client";
 import ProductCart from "@/components/Product/CartCard/ProductCart";
 import useCart from "@/store/store";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
 
 interface Cart {
     email: string;
@@ -16,22 +16,22 @@ function page() {
         email: USER_EMAIL,
     };
 
-    const mutation = useMutation({
-        mutationFn: async (newTodo: Cart) => {
+    console.log(cartData);
+
+    let mutation = useQuery({
+        queryKey: ["carts"],
+        queryFn: async () => {
             return await fetch("http://localhost:8000/api/v1/users/cart", {
                 method: "POST",
-                next: { revalidate: 10 },
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(newTodo),
+                body: JSON.stringify(cartData),
             }).then((res) => res.json());
         },
     });
 
-    useEffect(() => {
-        if (USER_EMAIL) mutation.mutate(cartData);
-    }, []);
+    console.log(mutation.data);
 
     if (mutation.isSuccess) {
         // console.log(mutation.data.data.length);
