@@ -14,6 +14,10 @@ async function getProduct(id: string) {
             }
         ).then((res) => res.json());
 
+        if (response.success == false) {
+            return response;
+        }
+
         return response.data;
     } catch (error) {
         return {
@@ -25,12 +29,16 @@ async function getProduct(id: string) {
 async function page({ params }: { params: { id: string } }) {
     const data = await getProduct(params.id);
 
+    if (data.error) {
+        return <h1 className="center__screen__text">Product Not Found</h1>;
+    }
+
     return (
         <section className="px-8 py-4 flex ">
             <div
                 className="p-2 rounded-md h-[36rem] max-w-[42rem] min-w-[36rem] flex justify-center items-center bg-slate-50
-            hover:bg-slate-100 hover:shadow-lg 
-            
+            hover:bg-slate-100 hover:shadow-lg
+
             transition duration-300 ease-in-out
             ">
                 <img

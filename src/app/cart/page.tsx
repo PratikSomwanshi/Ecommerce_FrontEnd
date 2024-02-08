@@ -1,8 +1,9 @@
 "use client";
 import ProductCart from "@/components/Product/CartCard/ProductCart";
+import CartProduct from "@/components/Product/CartProduct";
 import useCart from "@/store/store";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { Suspense } from "react";
 
 interface Cart {
     email: string;
@@ -16,7 +17,11 @@ function page() {
         email: USER_EMAIL,
     };
 
-    console.log(cartData);
+    if (!USER_EMAIL) {
+        return (
+            <h1 className="center__screen__text">Please login to view cart</h1>
+        );
+    }
 
     let mutation = useQuery({
         queryKey: ["carts"],
@@ -31,17 +36,32 @@ function page() {
         },
     });
 
-    console.log(mutation.data);
+    let data;
+    if (mutation.isSuccess) {
+        data = mutation.data.data[0];
+        setCartCount({ count: data.cart_data.length });
+
+        if (data.cart_data.length === 0) {
+            return <h1 className="center__screen__text">Cart is empty</h1>;
+        }
+    }
 
     if (mutation.isSuccess) {
-        // console.log(mutation.data.data.length);
-        setCartCount({ count: mutation.data.data.length });
         return (
             <section className="container m-auto px-44 py-10 space-y-4 ">
-                {mutation.data.data.map((item: any) => {
-                    count++;
-                    return <ProductCart id={item} count={count} />;
-                })}
+                {data &&
+                    data.cart_data.map((item: any) => {
+                        count++;
+                        return (
+                            <Suspense fallback={<h1>Loading...</h1>}>
+                                <CartProduct
+                                    count={count}
+                                    data={item}
+                                    key={item._id}
+                                />
+                            </Suspense>
+                        );
+                    })}
             </section>
         );
     }

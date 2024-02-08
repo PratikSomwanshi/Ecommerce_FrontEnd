@@ -16,7 +16,6 @@ function ProductCart(props: { id: string; count: number }) {
         return (
             <div className="">
                 <CartProduct data={data.data} count={props.count} />
-                <Divider className="mt-4 mb-4" />
             </div>
         );
     }

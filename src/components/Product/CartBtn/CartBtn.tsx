@@ -37,7 +37,6 @@ function CartBtn(props: { id: string }) {
     }
 
     function handleCart(response: { success: boolean; message: string }) {
-        console.log("donbe");
         if (response.success) {
             addCount();
             router.push("/cart");

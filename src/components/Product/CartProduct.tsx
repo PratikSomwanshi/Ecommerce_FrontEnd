@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Button, Divider } from "@nextui-org/react";
 import { MdDelete } from "react-icons/md";
 import Image from "next/image";
 import React from "react";
@@ -19,7 +19,7 @@ interface Props {
 
 interface CartApi {
     email: string;
-    index: number;
+    id: string;
 }
 
 function CartProduct(props: Props) {
@@ -34,14 +34,13 @@ function CartProduct(props: Props) {
                 "http://localhost:8000/api/v1/users/cart",
                 {
                     method: "DELETE",
-                    cache: "no-store",
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify(newTodo),
                 }
             ).then((res) => res.json());
-            console.log(response);
+
             return response;
         },
         onSuccess: () => {
@@ -50,38 +49,43 @@ function CartProduct(props: Props) {
     });
 
     return (
-        <div className="px-4 w-full h-24 flex justify-between">
-            <div className="flex space-x-4 items-center h-full">
-                <div>
-                    <Image
-                        src={data.image}
-                        alt="something"
-                        width={100}
-                        height={100}
-                        className="h-20 w-36"
-                    />
+        <>
+            <div className="px-4 w-full h-24 flex justify-between">
+                <div className="flex space-x-4 items-center h-full">
+                    <div>
+                        <Image
+                            src={data.image}
+                            alt="something"
+                            width={100}
+                            height={100}
+                            className="h-20 w-36"
+                        />
+                    </div>
+                    <div>
+                        <h2>{data.name}</h2>
+                        <h3>{JSON.stringify(data.price)}</h3>
+                    </div>
+                    <h1>{props.count}</h1>
                 </div>
-                <div>
-                    <h2>{data.name}</h2>
-                    <h3>{JSON.stringify(data.price)}</h3>
+                <div className="flex items-center">
+                    <Button
+                        className="text-md"
+                        color="danger"
+                        variant="solid"
+                        startContent={<MdDelete />}
+                        onClick={() => {
+                            // console.log(props.data);
+                            mutation.mutate({
+                                email: USER_EMAIL,
+                                id: props.data._id,
+                            });
+                        }}>
+                        Delete
+                    </Button>
                 </div>
             </div>
-            <div className="flex items-center">
-                <Button
-                    className="text-md"
-                    color="danger"
-                    variant="solid"
-                    startContent={<MdDelete />}
-                    onClick={() => {
-                        mutation.mutate({
-                            email: USER_EMAIL,
-                            index: props.count,
-                        });
-                    }}>
-                    Delete
-                </Button>
-            </div>
-        </div>
+            <Divider className="mt-4 mb-4" />
+        </>
     );
 }
 
