@@ -30,7 +30,7 @@ function NavigationBar() {
                             )}
                         </li>
                     ))}
-                    <Link href="/seller/product">Product</Link>
+                    {/* <Link href="/seller/product">Product</Link> */}
                 </div>
 
                 <div className="min-w-60 flex justify-between items-center h-full">
