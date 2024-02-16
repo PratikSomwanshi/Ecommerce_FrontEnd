@@ -12,8 +12,6 @@ interface Inputs {
 
 function Register() {
     const [iData, setIData] = useState(false);
-    let compareData = false;
-    let valid = false;
 
     async function createUser(data: Inputs) {
         try {
