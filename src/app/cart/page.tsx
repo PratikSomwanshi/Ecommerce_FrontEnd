@@ -1,5 +1,4 @@
 "use client";
-import ProductCart from "@/components/Product/CartCard/ProductCart";
 import CartProduct from "@/components/Product/CartProduct";
 import useCart from "@/store/store";
 import { useQuery } from "@tanstack/react-query";
@@ -10,6 +9,7 @@ interface Cart {
 }
 
 function page() {
+    const USER_API = process.env.NEXT_PUBLIC_USER_API_URL;
     let count = -1;
     const { USER_EMAIL, setCartCount, setCount } = useCart();
 
@@ -26,7 +26,7 @@ function page() {
     let mutation = useQuery({
         queryKey: ["carts"],
         queryFn: async () => {
-            return await fetch("http://localhost:8000/api/v1/users/cart", {
+            return await fetch(`${USER_API}/api/v1/users/cart`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -1,6 +1,6 @@
 import ProductCard from "@/components/Shop/Card/ProductCard";
-import axios from "axios";
 import React from "react";
+import Strings from "@/utils/strings";
 
 interface Product {
     _id: string;
@@ -11,11 +11,13 @@ interface Product {
     category: string;
 }
 
+const PRODUCT_API = process.env.NEXT_PUBLIC_PRODUCT_API_URL;
+
 async function getMensProducts() {
     try {
         let response;
         response = await fetch(
-            "http://localhost:5000/api/v1/products/?category=kids",
+            `${PRODUCT_API}/api/v1/products/?category=kids`,
             {
                 cache: "no-store",
             }
@@ -28,7 +30,7 @@ async function getMensProducts() {
         }
     } catch (error) {
         return {
-            error: "Failed to fetch the data",
+            error: Strings.FAILED_DATA,
         };
     }
 }

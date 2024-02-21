@@ -1,6 +1,6 @@
 import ProductCard from "@/components/Shop/Card/ProductCard";
-import { Metadata } from "next";
 import React from "react";
+import Strings from "@/utils/strings";
 
 interface Product {
     _id: string;
@@ -11,31 +11,25 @@ interface Product {
     category: string;
 }
 
+const PRODUCT_API = process.env.NEXT_PUBLIC_PRODUCT_API_URL;
+
 async function getMensProducts() {
     try {
-        
-    
-    let response;
-    response = await fetch(
-        "http://localhost:5000/api/v1/products/?category=men",
-        {
+        let response;
+        response = await fetch(`${PRODUCT_API}/api/v1/products/?category=men`, {
             cache: "no-store",
+        });
+
+        if (response.ok) {
+            const res = await response.json();
+
+            return res.data;
         }
-    );
-
-    if (response.ok) {
-        const res = await response.json();
-
-        return res.data;
+    } catch (error) {
+        return {
+            error: Strings.FAILED_DATA,
+        };
     }
-
-} catch (error) {
-    return {
-        error: "Failed to fetch the data",
-    };  
-}
-
-    
 }
 
 async function page() {

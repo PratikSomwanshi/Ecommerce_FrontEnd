@@ -1,18 +1,18 @@
 "use client";
 import CartBtn from "@/components/Product/CartBtn/CartBtn";
 import React from "react";
+import Strings from "@/utils/strings";
+
+const PRODUCT_API = process.env.NEXT_PUBLIC_PRODUCT_API_URL;
 
 async function getProduct(id: string) {
     try {
-        const response = await fetch(
-            `http://localhost:5000/api/v1/products/${id}`,
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        ).then((res) => res.json());
+        const response = await fetch(`${PRODUCT_API}/api/v1/products/${id}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res.json());
 
         if (response.success == false) {
             return response;
@@ -21,7 +21,7 @@ async function getProduct(id: string) {
         return response.data;
     } catch (error) {
         return {
-            error: "Failed to fetch the data",
+            error: Strings.FAILED_DATA,
         };
     }
 }

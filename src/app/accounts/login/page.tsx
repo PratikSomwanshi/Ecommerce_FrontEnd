@@ -15,6 +15,8 @@ interface Inputs {
 }
 
 function Register() {
+    const USER_API = process.env.NEXT_PUBLIC_USER_API_URL;
+    console.log(USER_API);
     const { addUserEmail } = useCart();
     const [cookies, setCookie] = useCookies(["accessToken"]);
     const time = moment(new Date()).add(1, "d").toDate();
@@ -22,7 +24,7 @@ function Register() {
 
     const mutation = useMutation({
         mutationFn: async (user: Inputs) => {
-            return await fetch("http://localhost:8000/api/v1/users/signin", {
+            return await fetch(`${USER_API}/api/v1/users/signin`, {
                 method: "post",
                 cache: "no-store",
                 headers: {

@@ -6,6 +6,8 @@ import React from "react";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const USER_API = process.env.NEXT_PUBLIC_USER_API_URL;
+
 function CartBtn(props: { id: string }) {
     const { addCount, USER_EMAIL, CART } = useCart();
     const [loading, setLoading] = React.useState(false);
@@ -16,20 +18,17 @@ function CartBtn(props: { id: string }) {
             router.push("/cart");
         } else {
             setLoading(true);
-            const response = await fetch(
-                "http://localhost:8000/api/v1/users/cart",
-                {
-                    method: "PUT",
-                    cache: "no-store",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        email: USER_EMAIL,
-                        productId: props.id,
-                    }),
-                }
-            ).then((res) => res.json());
+            const response = await fetch(`${USER_API}/api/v1/users/cart`, {
+                method: "PUT",
+                cache: "no-store",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: USER_EMAIL,
+                    productId: props.id,
+                }),
+            }).then((res) => res.json());
 
             handleCart(response);
             setLoading(false);

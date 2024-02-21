@@ -11,13 +11,14 @@ interface Inputs {
 }
 
 function Register() {
+    const USER_API = process.env.NEXT_PUBLIC_USER_API_URL;
     const [iData, setIData] = useState(false);
 
     async function createUser(data: Inputs) {
         try {
             const response = await axios({
                 method: "post",
-                url: "http://localhost:8000/api/v1/users/signup",
+                url: `${USER_API}/api/v1/users/signup`,
                 data: {
                     email: data.email,
                     password: data.password,

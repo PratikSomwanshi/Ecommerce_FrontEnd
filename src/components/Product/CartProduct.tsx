@@ -5,6 +5,8 @@ import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useCart from "@/store/store";
 
+const USER_API = process.env.NEXT_PUBLIC_USER_API_URL;
+
 interface Props {
     data: {
         _id: string;
@@ -30,16 +32,13 @@ function CartProduct(props: Props) {
 
     const mutation = useMutation({
         mutationFn: async (newTodo: CartApi) => {
-            const response = await fetch(
-                "http://localhost:8000/api/v1/users/cart",
-                {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(newTodo),
-                }
-            ).then((res) => res.json());
+            const response = await fetch(`${USER_API}/api/v1/users/cart`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(newTodo),
+            }).then((res) => res.json());
 
             return response;
         },

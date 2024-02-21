@@ -1,11 +1,14 @@
 import ProductSkeleton from "@/components/ProductSkeleton/ProductSkeleton";
 import ProductCard from "@/components/Shop/Card/ProductCard";
 import React, { Suspense } from "react";
+import Strings from "@/utils/strings";
+
+const PRODUCT_API = process.env.NEXT_PUBLIC_PRODUCT_API_URL;
 
 async function getProduct() {
     try {
         let response;
-        response = await fetch("http://localhost:5000/api/v1/products", {
+        response = await fetch(`${PRODUCT_API}/api/v1/products`, {
             cache: "no-store",
         });
 
@@ -16,7 +19,7 @@ async function getProduct() {
         }
     } catch (error) {
         return {
-            error: "Failed to fetch the data",
+            error: Strings.FAILED_DATA,
         };
     }
 }
